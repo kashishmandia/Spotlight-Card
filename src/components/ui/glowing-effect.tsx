@@ -15,6 +15,8 @@ interface GlowingEffectProps {
   disabled?: boolean;
   movementDuration?: number;
   borderWidth?: number;
+  side?: "left" | "right" | "center";
+  pointerPosition?: "left" | "center" | "right";
 }
 
 const GlowingEffect = memo(
@@ -29,6 +31,8 @@ const GlowingEffect = memo(
     movementDuration = 2,
     borderWidth = 1,
     disabled = true,
+    side = "left",
+    pointerPosition = "center",
   }: GlowingEffectProps) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const lastPosition = useRef({ x: 0, y: 0 });
@@ -118,6 +122,61 @@ const GlowingEffect = memo(
       };
     }, [handleMove, disabled]);
 
+    // Get gradient based on side and pointer position
+    const getGradient = () => {
+      if (variant === "white") {
+        return `repeating-conic-gradient(
+          from 236.84deg at 50% 50%,
+          var(--black),
+          var(--black) calc(25% / var(--repeating-conic-gradient-times))
+        )`;
+      }
+
+      // Colors
+      const blue = "#3b82f6";
+      const pink = "#ff69b4";
+      const yellow = "#ffd700";
+      const purple = "#9370db";
+      const orange = "#ffa07a";
+
+      // Get current glow color based on pointer position and side
+      let glowColor1: string, glowColor2: string;
+      
+      if (side === "left") {
+        // Left boxes: blue to pink
+        glowColor1 = blue;
+        glowColor2 = pink;
+      } else if (side === "right") {
+        // Right boxes: pink to yellow
+        glowColor1 = pink;
+        glowColor2 = yellow;
+      } else {
+        // Center: blue to yellow with pink in middle
+        glowColor1 = blue;
+        glowColor2 = yellow;
+      }
+
+      // Adjust based on pointer position
+      let activeColor = pink;
+      if (pointerPosition === "left") {
+        activeColor = glowColor1;
+      } else if (pointerPosition === "right") {
+        activeColor = glowColor2;
+      }
+
+      return `radial-gradient(circle at 50% 50%, ${activeColor} 5%, ${activeColor}00 30%),
+        radial-gradient(circle at 0% 50%, ${glowColor1} 10%, ${glowColor1}00 40%),
+        radial-gradient(circle at 100% 50%, ${glowColor2} 10%, ${glowColor2}00 40%),
+        repeating-conic-gradient(
+          from 236.84deg at 50% 50%,
+          ${glowColor1} 0%,
+          ${activeColor} calc(25% / var(--repeating-conic-gradient-times)),
+          ${glowColor2} calc(50% / var(--repeating-conic-gradient-times)), 
+          ${activeColor} calc(75% / var(--repeating-conic-gradient-times)),
+          ${glowColor1} calc(100% / var(--repeating-conic-gradient-times))
+        )`;
+    };
+
     return (
       <>
         <div
@@ -138,24 +197,7 @@ const GlowingEffect = memo(
               "--active": "0",
               "--glowingeffect-border-width": `${borderWidth}px`,
               "--repeating-conic-gradient-times": "5",
-              "--gradient":
-                variant === "white"
-                  ? `repeating-conic-gradient(
-                  from 236.84deg at 50% 50%,
-                  var(--black),
-                  var(--black) calc(25% / var(--repeating-conic-gradient-times))
-                )`
-                  : `radial-gradient(circle at 50% 50%, #ff69b4 5%, #ff69b400 25%),
-                radial-gradient(circle at 0% 50%, #3b82f6 10%, #3b82f600 35%),
-                radial-gradient(circle at 100% 50%, #ffd700 10%, #ffd70000 35%),
-                repeating-conic-gradient(
-                  from 236.84deg at 50% 50%,
-                  #3b82f6 0%,
-                  #ff69b4 calc(25% / var(--repeating-conic-gradient-times)),
-                  #ffd700 calc(50% / var(--repeating-conic-gradient-times)), 
-                  #ff69b4 calc(75% / var(--repeating-conic-gradient-times)),
-                  #3b82f6 calc(100% / var(--repeating-conic-gradient-times))
-                )`,
+              "--gradient": getGradient(),
             } as React.CSSProperties
           }
           className={cn(
