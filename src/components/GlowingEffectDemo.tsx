@@ -107,9 +107,9 @@ const GridItem = ({ area, title, description }: GridItemProps) => {
           </div>
           {/* Pointer glow effect */}
           <div
-            className="pointer-events-none absolute inset-0 opacity-0 transition-all duration-300 group-hover:opacity-100 rounded-xl"
+            className="pointer-events-none absolute inset-0 opacity-0 transition-all duration-300 group-hover:opacity-60 rounded-xl"
             style={{
-              background: `radial-gradient(350px circle at var(--pointer-x, 50%) var(--pointer-y, 50%), ${getGlowColor()}, transparent 55%)`,
+              background: `radial-gradient(280px circle at var(--pointer-x, 50%) var(--pointer-y, 50%), ${getGlowColor()}, transparent 60%)`,
             }}
           />
         </div>
