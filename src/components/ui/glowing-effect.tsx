@@ -132,12 +132,11 @@ const GlowingEffect = memo(
         )`;
       }
 
-      // Colors
-      const blue = "#3b82f6";
-      const pink = "#ff69b4";
-      const yellow = "#ffd700";
-      const purple = "#9370db";
-      const orange = "#ffa07a";
+      // Colors - more muted/subtle
+      const blue = "#6366f1";
+      const pink = "#ec4899";
+      const yellow = "#eab308";
+      const purple = "#a855f7";
 
       // Get current glow color based on pointer position and side
       let glowColor1: string, glowColor2: string;
@@ -151,29 +150,25 @@ const GlowingEffect = memo(
         glowColor1 = pink;
         glowColor2 = yellow;
       } else {
-        // Center: blue to yellow with pink in middle
+        // Center: blue to yellow with purple
         glowColor1 = blue;
         glowColor2 = yellow;
       }
 
       // Adjust based on pointer position
-      let activeColor = pink;
+      let activeColor = purple;
       if (pointerPosition === "left") {
         activeColor = glowColor1;
       } else if (pointerPosition === "right") {
         activeColor = glowColor2;
       }
 
-      return `radial-gradient(circle at 50% 50%, ${activeColor} 5%, ${activeColor}00 30%),
-        radial-gradient(circle at 0% 50%, ${glowColor1} 10%, ${glowColor1}00 40%),
-        radial-gradient(circle at 100% 50%, ${glowColor2} 10%, ${glowColor2}00 40%),
-        repeating-conic-gradient(
-          from 236.84deg at 50% 50%,
-          ${glowColor1} 0%,
-          ${activeColor} calc(25% / var(--repeating-conic-gradient-times)),
-          ${glowColor2} calc(50% / var(--repeating-conic-gradient-times)), 
-          ${activeColor} calc(75% / var(--repeating-conic-gradient-times)),
-          ${glowColor1} calc(100% / var(--repeating-conic-gradient-times))
+      return `repeating-conic-gradient(
+          from calc((var(--start) - var(--spread)) * 1deg) at 50% 50%,
+          ${glowColor1}00 0deg,
+          ${activeColor} calc(var(--spread) * 0.5deg),
+          ${glowColor2} calc(var(--spread) * 1deg),
+          ${glowColor1}00 calc(var(--spread) * 2deg)
         )`;
     };
 
