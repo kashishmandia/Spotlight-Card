@@ -122,25 +122,6 @@ const GlowingEffect = memo(
       };
     }, [handleMove, disabled]);
 
-    // Get single glow color based on side and pointer position
-    const getGlowColor = () => {
-      const blue = "#6366f1";
-      const pink = "#ec4899";
-      const yellow = "#eab308";
-
-      if (side === "left") {
-        // Left boxes: blue on left, pink on right
-        if (pointerPosition === "left") return blue;
-        if (pointerPosition === "right") return pink;
-        return `color-mix(in srgb, ${blue} 50%, ${pink})`;
-      } else {
-        // Right boxes: pink on left, yellow on right
-        if (pointerPosition === "left") return pink;
-        if (pointerPosition === "right") return yellow;
-        return `color-mix(in srgb, ${pink} 50%, ${yellow})`;
-      }
-    };
-
     const getGradient = () => {
       if (variant === "white") {
         return `repeating-conic-gradient(
@@ -150,14 +131,17 @@ const GlowingEffect = memo(
         )`;
       }
 
-      const glowColor = getGlowColor();
+      const blue = "#6366f1";
+      const pink = "#ec4899";
+      const yellow = "#eab308";
 
-      return `conic-gradient(
-          from calc((var(--start) - var(--spread)) * 1deg) at 50% 50%,
-          transparent 0deg,
-          ${glowColor} calc(var(--spread) * 1deg),
-          transparent calc(var(--spread) * 2deg)
-        )`;
+      if (side === "left") {
+        // Left boxes: blue on left corners, pink on right corners
+        return `linear-gradient(135deg, ${blue} 0%, ${pink} 50%, ${blue} 100%)`;
+      } else {
+        // Right boxes: pink on left corners, yellow on right corners
+        return `linear-gradient(135deg, ${pink} 0%, ${yellow} 50%, ${pink} 100%)`;
+      }
     };
 
     return (
@@ -198,10 +182,10 @@ const GlowingEffect = memo(
               'after:content-[""] after:rounded-[inherit] after:absolute after:inset-[calc(-1*var(--glowingeffect-border-width))]',
               "after:[border:var(--glowingeffect-border-width)_solid_transparent]",
               "after:[background:var(--gradient)] after:[background-attachment:fixed]",
-              "after:opacity-[var(--active)] after:transition-opacity after:duration-300",
+              "after:opacity-100 after:transition-opacity after:duration-300",
               "after:[mask-clip:padding-box,border-box]",
               "after:[mask-composite:intersect]",
-              "after:[mask-image:linear-gradient(#0000,#0000),conic-gradient(from_calc((var(--start)-var(--spread))*1deg),#00000000_0deg,#fff,#00000000_calc(var(--spread)*2deg))]"
+              "after:[mask-image:linear-gradient(#0000,#0000),linear-gradient(#fff,#fff)]"
             )}
           />
         </div>
