@@ -15,13 +15,13 @@ export function GlowingEffectDemo() {
         area="md:[grid-area:1/7/2/13] xl:[grid-area:2/1/3/5]"
         title="Financial Advisor"
         description="A personalized financial dashboard that doesn't just calculate numbers but visualizes your financial health."
-        side="left"
+        side="right"
       />
       <GridItem
         area="md:[grid-area:2/1/3/7] xl:[grid-area:1/5/3/8]"
         title="KashBerry AI"
         description="KashBerry AI is a cute, pink-themed AI fashion assistant that helps women discover trendy outfits, compare prices across Amazon, Myntra & Meesho, and shop smarter with LLM-powered recommendations."
-        side="center"
+        side="left"
       />
       <GridItem
         area="md:[grid-area:2/7/3/13] xl:[grid-area:1/8/2/13]"
@@ -37,7 +37,7 @@ interface GridItemProps {
   area: string;
   title: string;
   description: React.ReactNode;
-  side: "left" | "right" | "center";
+  side: "left" | "right";
 }
 
 const GridItem = ({ area, title, description, side }: GridItemProps) => {
@@ -75,19 +75,14 @@ const GridItem = ({ area, title, description, side }: GridItemProps) => {
   const getPointerColor = () => {
     if (side === 'left') {
       // Left boxes: blue on left, pink on right
-      if (pointerPosition === 'left') return 'rgba(99, 102, 241, 0.15)'; // indigo
+      if (pointerPosition === 'left') return 'rgba(99, 102, 241, 0.15)'; // blue
       if (pointerPosition === 'right') return 'rgba(236, 72, 153, 0.15)'; // pink
-      return 'rgba(168, 85, 247, 0.15)'; // purple blend
-    } else if (side === 'right') {
+      return 'rgba(168, 85, 247, 0.15)'; // blend
+    } else {
       // Right boxes: pink on left, yellow on right
       if (pointerPosition === 'left') return 'rgba(236, 72, 153, 0.15)'; // pink
       if (pointerPosition === 'right') return 'rgba(234, 179, 8, 0.15)'; // yellow
-      return 'rgba(249, 115, 22, 0.15)'; // orange blend
-    } else {
-      // Center box: blend of all
-      if (pointerPosition === 'left') return 'rgba(99, 102, 241, 0.15)'; // indigo
-      if (pointerPosition === 'right') return 'rgba(234, 179, 8, 0.15)'; // yellow
-      return 'rgba(168, 85, 247, 0.15)'; // purple
+      return 'rgba(245, 126, 88, 0.15)'; // blend
     }
   };
 

@@ -122,7 +122,25 @@ const GlowingEffect = memo(
       };
     }, [handleMove, disabled]);
 
-    // Get gradient based on side and pointer position
+    // Get single glow color based on side and pointer position
+    const getGlowColor = () => {
+      const blue = "#6366f1";
+      const pink = "#ec4899";
+      const yellow = "#eab308";
+
+      if (side === "left") {
+        // Left boxes: blue on left, pink on right
+        if (pointerPosition === "left") return blue;
+        if (pointerPosition === "right") return pink;
+        return `color-mix(in srgb, ${blue} 50%, ${pink})`;
+      } else {
+        // Right boxes: pink on left, yellow on right
+        if (pointerPosition === "left") return pink;
+        if (pointerPosition === "right") return yellow;
+        return `color-mix(in srgb, ${pink} 50%, ${yellow})`;
+      }
+    };
+
     const getGradient = () => {
       if (variant === "white") {
         return `repeating-conic-gradient(
@@ -132,43 +150,13 @@ const GlowingEffect = memo(
         )`;
       }
 
-      // Colors - more muted/subtle
-      const blue = "#6366f1";
-      const pink = "#ec4899";
-      const yellow = "#eab308";
-      const purple = "#a855f7";
+      const glowColor = getGlowColor();
 
-      // Get current glow color based on pointer position and side
-      let glowColor1: string, glowColor2: string;
-      
-      if (side === "left") {
-        // Left boxes: blue to pink
-        glowColor1 = blue;
-        glowColor2 = pink;
-      } else if (side === "right") {
-        // Right boxes: pink to yellow
-        glowColor1 = pink;
-        glowColor2 = yellow;
-      } else {
-        // Center: blue to yellow with purple
-        glowColor1 = blue;
-        glowColor2 = yellow;
-      }
-
-      // Adjust based on pointer position
-      let activeColor = purple;
-      if (pointerPosition === "left") {
-        activeColor = glowColor1;
-      } else if (pointerPosition === "right") {
-        activeColor = glowColor2;
-      }
-
-      return `repeating-conic-gradient(
+      return `conic-gradient(
           from calc((var(--start) - var(--spread)) * 1deg) at 50% 50%,
-          ${glowColor1}00 0deg,
-          ${activeColor} calc(var(--spread) * 0.5deg),
-          ${glowColor2} calc(var(--spread) * 1deg),
-          ${glowColor1}00 calc(var(--spread) * 2deg)
+          transparent 0deg,
+          ${glowColor} calc(var(--spread) * 1deg),
+          transparent calc(var(--spread) * 2deg)
         )`;
     };
 
