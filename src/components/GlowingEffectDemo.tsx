@@ -95,7 +95,7 @@ const GridItem = ({ area, title, description, side }: GridItemProps) => {
         onMouseLeave={clearGlow}
       >
         <GlowingEffect
-          spread={40}
+          spread={80}
           glow={true}
           disabled={false}
           proximity={64}
