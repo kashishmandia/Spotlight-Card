@@ -75,19 +75,19 @@ const GridItem = ({ area, title, description, side }: GridItemProps) => {
   const getPointerColor = () => {
     if (side === 'left') {
       // Left boxes: blue on left, pink on right
-      if (pointerPosition === 'left') return 'rgba(59, 130, 246, 0.2)'; // blue
-      if (pointerPosition === 'right') return 'rgba(255, 105, 180, 0.2)'; // pink
-      return 'rgba(147, 112, 219, 0.2)'; // purple blend
+      if (pointerPosition === 'left') return 'rgba(99, 102, 241, 0.15)'; // indigo
+      if (pointerPosition === 'right') return 'rgba(236, 72, 153, 0.15)'; // pink
+      return 'rgba(168, 85, 247, 0.15)'; // purple blend
     } else if (side === 'right') {
       // Right boxes: pink on left, yellow on right
-      if (pointerPosition === 'left') return 'rgba(255, 105, 180, 0.2)'; // pink
-      if (pointerPosition === 'right') return 'rgba(255, 215, 0, 0.2)'; // yellow
-      return 'rgba(255, 160, 122, 0.2)'; // orange blend
+      if (pointerPosition === 'left') return 'rgba(236, 72, 153, 0.15)'; // pink
+      if (pointerPosition === 'right') return 'rgba(234, 179, 8, 0.15)'; // yellow
+      return 'rgba(249, 115, 22, 0.15)'; // orange blend
     } else {
       // Center box: blend of all
-      if (pointerPosition === 'left') return 'rgba(59, 130, 246, 0.2)'; // blue
-      if (pointerPosition === 'right') return 'rgba(255, 215, 0, 0.2)'; // yellow
-      return 'rgba(255, 105, 180, 0.2)'; // pink
+      if (pointerPosition === 'left') return 'rgba(99, 102, 241, 0.15)'; // indigo
+      if (pointerPosition === 'right') return 'rgba(234, 179, 8, 0.15)'; // yellow
+      return 'rgba(168, 85, 247, 0.15)'; // purple
     }
   };
 
@@ -95,7 +95,7 @@ const GridItem = ({ area, title, description, side }: GridItemProps) => {
     <li className={cn("min-h-[18rem] list-none", area)}>
       <div 
         ref={cardRef}
-        className="group relative h-full rounded-2xl border border-border p-1"
+        className="group relative h-full rounded-[20px] border border-border/30 p-[2px]"
         onMouseMove={setGlow}
         onMouseLeave={clearGlow}
       >
@@ -109,7 +109,7 @@ const GridItem = ({ area, title, description, side }: GridItemProps) => {
           side={side}
           pointerPosition={pointerPosition}
         />
-        <div className="relative flex h-full flex-col justify-end gap-6 overflow-hidden rounded-xl bg-background p-6 shadow-sm dark:shadow-[0px_0px_27px_0px_rgba(45,45,45,0.3)] md:p-8">
+        <div className="relative flex h-full flex-col justify-end gap-6 overflow-hidden rounded-[18px] bg-card p-6 md:p-8">
           <div className="relative flex flex-1 flex-col justify-end gap-3">
             <div className="space-y-3">
               <h3 className="pt-0.5 text-xl leading-[1.375rem] font-semibold font-sans tracking-[-0.04em] md:text-2xl md:leading-[1.875rem] text-balance text-foreground">
@@ -122,9 +122,9 @@ const GridItem = ({ area, title, description, side }: GridItemProps) => {
           </div>
           {/* Pointer glow effect */}
           <div
-            className="pointer-events-none absolute inset-0 opacity-0 transition-all duration-300 group-hover:opacity-60 rounded-xl"
+            className="pointer-events-none absolute inset-0 opacity-0 transition-all duration-300 group-hover:opacity-40 rounded-[18px]"
             style={{
-              background: `radial-gradient(280px circle at var(--pointer-x, 50%) var(--pointer-y, 50%), ${getPointerColor()}, transparent 60%)`,
+              background: `radial-gradient(300px circle at var(--pointer-x, 50%) var(--pointer-y, 50%), ${getPointerColor()}, transparent 50%)`,
             }}
           />
         </div>
