@@ -14,7 +14,7 @@ export function GlowingEffectDemo() {
           </p>
         </GlowCard>
 
-        <GlowCard glowColor="pink-pink" className="flex flex-col justify-end">
+        <GlowCard glowColor="pink-yellow" className="flex flex-col justify-end">
           <h3 className="text-xl md:text-2xl font-semibold text-foreground mb-3">
             Financial Advisor
           </h3>
@@ -32,7 +32,7 @@ export function GlowingEffectDemo() {
           </p>
         </GlowCard>
 
-        <GlowCard glowColor="pink-pink" className="flex flex-col justify-end">
+        <GlowCard glowColor="pink-yellow" className="flex flex-col justify-end">
           <h3 className="text-xl md:text-2xl font-semibold text-foreground mb-3">
             This card is also built by Cursor
           </h3>

@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 interface GlowCardProps {
   children: ReactNode;
   className?: string;
-  glowColor?: 'blue-pink' | 'pink-pink';
+  glowColor?: 'blue-pink' | 'pink-yellow';
 }
 
 const GlowCard: React.FC<GlowCardProps> = ({ 
@@ -31,16 +31,16 @@ const GlowCard: React.FC<GlowCardProps> = ({
     return () => document.removeEventListener('pointermove', syncPointer);
   }, []);
 
-  // Blue-pink gradient for left cards, pink-pink for right cards
+  // Blue-pink gradient for left cards, pink-yellow for right cards
   const colorConfig = glowColor === 'blue-pink' 
-    ? { base: 250, spread: 60 }  // Blue to pink range
-    : { base: 320, spread: 40 }; // Pink range
+    ? { base: 250, spread: 90 }   // Blue (left) to Pink (right)
+    : { base: 330, spread: 60 };  // Pink (left) to Yellow (right)
 
   // Pointer glow color based on card type
   const getPointerColor = () => {
     return glowColor === 'blue-pink' 
       ? 'rgba(168, 85, 247, 0.15)' // purple blend
-      : 'rgba(236, 72, 153, 0.15)'; // pink
+      : 'rgba(245, 126, 88, 0.15)'; // orange-pink blend
   };
 
   return (
