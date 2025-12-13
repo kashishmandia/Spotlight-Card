@@ -1,10 +1,10 @@
-import React, { useEffect, useRef, ReactNode } from 'react';
+import React, { useEffect, useRef, ReactNode, useState } from 'react';
 import { cn } from '@/lib/utils';
 
 interface GlowCardProps {
   children: ReactNode;
   className?: string;
-  glowColor?: 'blue-pink' | 'pink-yellow';
+  glowColor?: 'blue-pink' | 'pink-pink';
 }
 
 const GlowCard: React.FC<GlowCardProps> = ({ 
@@ -13,6 +13,7 @@ const GlowCard: React.FC<GlowCardProps> = ({
   glowColor = 'blue-pink'
 }) => {
   const cardRef = useRef<HTMLDivElement>(null);
+  const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
     const syncPointer = (e: PointerEvent) => {
@@ -30,15 +31,24 @@ const GlowCard: React.FC<GlowCardProps> = ({
     return () => document.removeEventListener('pointermove', syncPointer);
   }, []);
 
-  // Blue-pink gradient for left cards, pink-yellow for right cards
+  // Blue-pink gradient for left cards, pink-pink for right cards
   const colorConfig = glowColor === 'blue-pink' 
     ? { base: 250, spread: 60 }  // Blue to pink range
-    : { base: 330, spread: 60 }; // Pink to yellow range
+    : { base: 320, spread: 40 }; // Pink range
+
+  // Pointer glow color based on card type
+  const getPointerColor = () => {
+    return glowColor === 'blue-pink' 
+      ? 'rgba(168, 85, 247, 0.15)' // purple blend
+      : 'rgba(236, 72, 153, 0.15)'; // pink
+  };
 
   return (
     <div
       ref={cardRef}
       data-glow
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
       style={{
         '--base': colorConfig.base,
         '--spread': colorConfig.spread,
@@ -71,7 +81,19 @@ const GlowCard: React.FC<GlowCardProps> = ({
       )}
     >
       <div data-glow className="absolute inset-0 rounded-[inherit] pointer-events-none" />
-      {children}
+      {/* Pointer glow effect inside card */}
+      <div
+        className="pointer-events-none absolute inset-0 rounded-[inherit] transition-opacity duration-300"
+        style={{
+          opacity: isHovered ? 0.6 : 0,
+          background: `radial-gradient(
+            300px circle at calc(var(--x, 0) * 1px) calc(var(--y, 0) * 1px),
+            ${getPointerColor()}, transparent 50%
+          )`,
+          backgroundAttachment: 'fixed',
+        }}
+      />
+      <div className="relative z-10">{children}</div>
     </div>
   );
 };
