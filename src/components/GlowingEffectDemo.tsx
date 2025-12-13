@@ -6,37 +6,37 @@ export function GlowingEffectDemo() {
       <style>{glowStyles}</style>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-5xl mx-auto p-4">
         <GlowCard glowColor="blue-pink" className="flex flex-col justify-end">
-          <h3 className="text-xl md:text-2xl font-semibold text-foreground mb-3">
+          <h3 className="text-base md:text-lg font-semibold text-foreground mb-2">
             AI SaaS Landing Page
           </h3>
-          <p className="text-sm md:text-base text-muted-foreground">
+          <p className="text-xs md:text-sm text-muted-foreground leading-relaxed">
             A landing page for a fictional AI tool. The focus here is on the 'futuristic' aesthetic currently dominating the tech industry.
           </p>
         </GlowCard>
 
         <GlowCard glowColor="pink-yellow" className="flex flex-col justify-end">
-          <h3 className="text-xl md:text-2xl font-semibold text-foreground mb-3">
+          <h3 className="text-base md:text-lg font-semibold text-foreground mb-2">
             Financial Advisor
           </h3>
-          <p className="text-sm md:text-base text-muted-foreground">
+          <p className="text-xs md:text-sm text-muted-foreground leading-relaxed">
             A personalized financial dashboard that doesn't just calculate numbers but visualizes your financial health.
           </p>
         </GlowCard>
 
         <GlowCard glowColor="blue-pink" className="flex flex-col justify-end">
-          <h3 className="text-xl md:text-2xl font-semibold text-foreground mb-3">
+          <h3 className="text-base md:text-lg font-semibold text-foreground mb-2">
             KashBerry AI
           </h3>
-          <p className="text-sm md:text-base text-muted-foreground">
+          <p className="text-xs md:text-sm text-muted-foreground leading-relaxed">
             KashBerry AI is a cute, pink-themed AI fashion assistant that helps women discover trendy outfits, compare prices across Amazon, Myntra & Meesho, and shop smarter with LLM-powered recommendations.
           </p>
         </GlowCard>
 
         <GlowCard glowColor="pink-yellow" className="flex flex-col justify-end">
-          <h3 className="text-xl md:text-2xl font-semibold text-foreground mb-3">
+          <h3 className="text-base md:text-lg font-semibold text-foreground mb-2">
             This card is also built by Cursor
           </h3>
-          <p className="text-sm md:text-base text-muted-foreground">
+          <p className="text-xs md:text-sm text-muted-foreground leading-relaxed">
             I'm not even kidding. Ask my mom if you don't believe me.
           </p>
         </GlowCard>
