@@ -33,10 +33,10 @@ const GlowCard: React.FC<GlowCardProps> = ({
 
   // Blue-pink gradient for left cards, pink-yellow for right cards
   // Left cards: blue (250) → pink (340)
-  // Right cards: pink (340) → yellow (60), using negative spread to go the other direction
+  // Right cards: pink (340) → yellow (60 via 420 wrap)
   const colorConfig = glowColor === 'blue-pink' 
-    ? { base: 250, spread: 90 }    // Blue (left) to Pink (right)
-    : { base: 340, spread: -80 };  // Pink (left) to Yellow (right) - same pink as left card's right side
+    ? { base: 250, spread: 90 }   // Blue (left) to Pink (right)
+    : { base: 340, spread: 80 };  // Pink (left) to Yellow (right) - wraps past 360 to 60
 
   // Pointer glow color based on card type
   const getPointerColor = () => {
