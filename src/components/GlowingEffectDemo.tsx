@@ -1,129 +1,101 @@
-import { GlowingEffect } from "@/components/ui/glowing-effect";
-import { cn } from "@/lib/utils";
-import { useRef, useState } from "react";
+import { GlowCard } from "@/components/ui/glow-card";
 
 export function GlowingEffectDemo() {
   return (
-    <ul className="grid grid-cols-1 grid-rows-none gap-4 md:grid-cols-12 md:grid-rows-3 lg:gap-4 xl:max-h-[42rem] xl:grid-rows-2">
-      <GridItem
-        area="md:[grid-area:1/1/2/7] xl:[grid-area:1/1/2/5]"
-        title="AI SaaS Landing Page"
-        description="A landing page for a fictional AI tool. The focus here is on the 'futuristic' aesthetic currently dominating the tech industry."
-        side="left"
-      />
-      <GridItem
-        area="md:[grid-area:1/7/2/13] xl:[grid-area:2/1/3/5]"
-        title="Financial Advisor"
-        description="A personalized financial dashboard that doesn't just calculate numbers but visualizes your financial health."
-        side="right"
-      />
-      <GridItem
-        area="md:[grid-area:2/1/3/7] xl:[grid-area:1/5/3/8]"
-        title="KashBerry AI"
-        description="KashBerry AI is a cute, pink-themed AI fashion assistant that helps women discover trendy outfits, compare prices across Amazon, Myntra & Meesho, and shop smarter with LLM-powered recommendations."
-        side="left"
-      />
-      <GridItem
-        area="md:[grid-area:2/7/3/13] xl:[grid-area:1/8/2/13]"
-        title="This card is also built by Cursor"
-        description="I'm not even kidding. Ask my mom if you don't believe me."
-        side="right"
-      />
-    </ul>
-  );
-}
+    <>
+      <style>{glowStyles}</style>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-5xl mx-auto p-4">
+        <GlowCard glowColor="blue-pink" className="flex flex-col justify-end">
+          <h3 className="text-xl md:text-2xl font-semibold text-foreground mb-3">
+            AI SaaS Landing Page
+          </h3>
+          <p className="text-sm md:text-base text-muted-foreground">
+            A landing page for a fictional AI tool. The focus here is on the 'futuristic' aesthetic currently dominating the tech industry.
+          </p>
+        </GlowCard>
 
-interface GridItemProps {
-  area: string;
-  title: string;
-  description: React.ReactNode;
-  side: "left" | "right";
-}
+        <GlowCard glowColor="pink-yellow" className="flex flex-col justify-end">
+          <h3 className="text-xl md:text-2xl font-semibold text-foreground mb-3">
+            Financial Advisor
+          </h3>
+          <p className="text-sm md:text-base text-muted-foreground">
+            A personalized financial dashboard that doesn't just calculate numbers but visualizes your financial health.
+          </p>
+        </GlowCard>
 
-const GridItem = ({ area, title, description, side }: GridItemProps) => {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const [pointerPosition, setPointerPosition] = useState<'left' | 'center' | 'right'>('center');
+        <GlowCard glowColor="blue-pink" className="flex flex-col justify-end">
+          <h3 className="text-xl md:text-2xl font-semibold text-foreground mb-3">
+            KashBerry AI
+          </h3>
+          <p className="text-sm md:text-base text-muted-foreground">
+            KashBerry AI is a cute, pink-themed AI fashion assistant that helps women discover trendy outfits, compare prices across Amazon, Myntra & Meesho, and shop smarter with LLM-powered recommendations.
+          </p>
+        </GlowCard>
 
-  const setGlow = (event: React.MouseEvent) => {
-    const target = cardRef.current;
-    if (!target) return;
-    const rect = target.getBoundingClientRect();
-    const x = event.clientX - rect.left;
-    const centerX = rect.width / 2;
-    
-    target.style.setProperty("--pointer-x", `${x}px`);
-    target.style.setProperty("--pointer-y", `${event.clientY - rect.top}px`);
-    
-    if (x < centerX - 50) {
-      setPointerPosition('left');
-    } else if (x > centerX + 50) {
-      setPointerPosition('right');
-    } else {
-      setPointerPosition('center');
-    }
-  };
-
-  const clearGlow = () => {
-    const target = cardRef.current;
-    if (!target) return;
-    target.style.removeProperty("--pointer-x");
-    target.style.removeProperty("--pointer-y");
-    setPointerPosition('center');
-  };
-
-  // Get pointer glow color based on side and position
-  const getPointerColor = () => {
-    if (side === 'left') {
-      // Left boxes: blue on left, pink on right
-      if (pointerPosition === 'left') return 'rgba(99, 102, 241, 0.15)'; // blue
-      if (pointerPosition === 'right') return 'rgba(236, 72, 153, 0.15)'; // pink
-      return 'rgba(168, 85, 247, 0.15)'; // blend
-    } else {
-      // Right boxes: pink on left, yellow on right
-      if (pointerPosition === 'left') return 'rgba(236, 72, 153, 0.15)'; // pink
-      if (pointerPosition === 'right') return 'rgba(234, 179, 8, 0.15)'; // yellow
-      return 'rgba(245, 126, 88, 0.15)'; // blend
-    }
-  };
-
-  return (
-    <li className={cn("min-h-[18rem] list-none", area)}>
-      <div 
-        ref={cardRef}
-        className="group relative h-full rounded-[20px] border border-border/30 p-[2px]"
-        onMouseMove={setGlow}
-        onMouseLeave={clearGlow}
-      >
-        <GlowingEffect
-          spread={80}
-          glow={true}
-          disabled={false}
-          proximity={64}
-          inactiveZone={0.01}
-          borderWidth={2}
-          side={side}
-          pointerPosition={pointerPosition}
-        />
-        <div className="relative flex h-full flex-col justify-end gap-6 overflow-hidden rounded-[18px] bg-card p-6 md:p-8">
-          <div className="relative flex flex-1 flex-col justify-end gap-3">
-            <div className="space-y-3">
-              <h3 className="pt-0.5 text-xl leading-[1.375rem] font-semibold font-sans tracking-[-0.04em] md:text-2xl md:leading-[1.875rem] text-balance text-foreground">
-                {title}
-              </h3>
-              <p className="font-sans text-sm leading-[1.125rem] md:text-base md:leading-[1.375rem] text-muted-foreground">
-                {description}
-              </p>
-            </div>
-          </div>
-          {/* Pointer glow effect */}
-          <div
-            className="pointer-events-none absolute inset-0 opacity-0 transition-all duration-300 group-hover:opacity-40 rounded-[18px]"
-            style={{
-              background: `radial-gradient(300px circle at var(--pointer-x, 50%) var(--pointer-y, 50%), ${getPointerColor()}, transparent 50%)`,
-            }}
-          />
-        </div>
+        <GlowCard glowColor="pink-yellow" className="flex flex-col justify-end">
+          <h3 className="text-xl md:text-2xl font-semibold text-foreground mb-3">
+            This card is also built by Cursor
+          </h3>
+          <p className="text-sm md:text-base text-muted-foreground">
+            I'm not even kidding. Ask my mom if you don't believe me.
+          </p>
+        </GlowCard>
       </div>
-    </li>
+    </>
   );
-};
+}
+
+const glowStyles = `
+  [data-glow]::before,
+  [data-glow]::after {
+    pointer-events: none;
+    content: "";
+    position: absolute;
+    inset: calc(var(--border-size, 2px) * -1);
+    border: var(--border-size, 2px) solid transparent;
+    border-radius: calc(var(--radius, 20) * 1px);
+    background-attachment: fixed;
+    background-size: calc(100% + (2 * var(--border-size, 2px))) calc(100% + (2 * var(--border-size, 2px)));
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    mask: linear-gradient(transparent, transparent), linear-gradient(white, white);
+    mask-clip: padding-box, border-box;
+    mask-composite: intersect;
+  }
+  
+  [data-glow]::before {
+    background-image: radial-gradient(
+      calc(var(--spotlight-size, 200px) * 0.75) calc(var(--spotlight-size, 200px) * 0.75) at
+      calc(var(--x, 0) * 1px)
+      calc(var(--y, 0) * 1px),
+      hsl(var(--hue, 210) 100% 55% / 1), transparent 100%
+    );
+    filter: brightness(1.5);
+  }
+  
+  [data-glow]::after {
+    background-image: radial-gradient(
+      calc(var(--spotlight-size, 200px) * 0.5) calc(var(--spotlight-size, 200px) * 0.5) at
+      calc(var(--x, 0) * 1px)
+      calc(var(--y, 0) * 1px),
+      hsl(0 100% 100% / 0.8), transparent 100%
+    );
+  }
+  
+  [data-glow] [data-glow] {
+    position: absolute;
+    inset: 0;
+    will-change: filter;
+    opacity: var(--outer, 1);
+    border-radius: calc(var(--radius, 20) * 1px);
+    filter: blur(calc(var(--border-size, 2px) * 10));
+    background: none;
+    pointer-events: none;
+    border: none;
+  }
+  
+  [data-glow] > [data-glow]::before {
+    inset: -10px;
+    border-width: 10px;
+  }
+`;
