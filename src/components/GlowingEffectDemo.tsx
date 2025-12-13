@@ -5,52 +5,40 @@ export function GlowingEffectDemo() {
     <>
       <style>{glowStyles}</style>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-5xl mx-auto p-4">
-        <GlowCard glowColor="blue-pink" className="flex flex-col">
-          <div className="flex-1" />
-          <div>
-            <h3 className="text-base md:text-lg font-semibold text-foreground mb-2">
-              HealthPulse AI
-            </h3>
-            <p className="text-xs md:text-sm text-muted-foreground leading-relaxed line-clamp-4">
-              HealthPulse AI is a futuristic patient dashboard that aggregates vitals, symptoms, and mental wellness into a real-time unified health score with predictive trend analysis. It features an integrated AI Doctor powered by Gemini Pro for instant medical triage and personalized health insights.
-            </p>
-          </div>
+        <GlowCard glowColor="blue-pink">
+          <h3 className="text-base md:text-lg font-semibold text-foreground mb-2">
+            HealthPulse AI
+          </h3>
+          <p className="text-xs md:text-sm text-muted-foreground leading-relaxed">
+            HealthPulse AI is a futuristic patient dashboard that aggregates vitals, symptoms, and mental wellness into a real-time unified health score with predictive trend analysis. It features an integrated AI Doctor powered by Gemini Pro for instant medical triage and personalized health insights.
+          </p>
         </GlowCard>
 
-        <GlowCard glowColor="pink-yellow" className="flex flex-col">
-          <div className="flex-1" />
-          <div>
-            <h3 className="text-base md:text-lg font-semibold text-foreground mb-2">
-              Financial Advisor
-            </h3>
-            <p className="text-xs md:text-sm text-muted-foreground leading-relaxed line-clamp-4">
-              A personalized financial dashboard that doesn't just calculate numbers but visualizes your financial health.
-            </p>
-          </div>
+        <GlowCard glowColor="pink-yellow">
+          <h3 className="text-base md:text-lg font-semibold text-foreground mb-2">
+            Financial Advisor
+          </h3>
+          <p className="text-xs md:text-sm text-muted-foreground leading-relaxed">
+            A personalized financial dashboard that doesn't just calculate numbers but visualizes your financial health.
+          </p>
         </GlowCard>
 
-        <GlowCard glowColor="blue-pink" className="flex flex-col">
-          <div className="flex-1" />
-          <div>
-            <h3 className="text-base md:text-lg font-semibold text-foreground mb-2">
-              KashBerry AI
-            </h3>
-            <p className="text-xs md:text-sm text-muted-foreground leading-relaxed line-clamp-4">
-              KashBerry AI is a cute, pink-themed AI fashion assistant that helps women discover trendy outfits, compare prices across Amazon, Myntra & Meesho, and shop smarter with LLM-powered recommendations.
-            </p>
-          </div>
+        <GlowCard glowColor="blue-pink">
+          <h3 className="text-base md:text-lg font-semibold text-foreground mb-2">
+            KashBerry AI
+          </h3>
+          <p className="text-xs md:text-sm text-muted-foreground leading-relaxed">
+            KashBerry AI is a cute, pink-themed AI fashion assistant that helps women discover trendy outfits, compare prices across Amazon, Myntra & Meesho, and shop smarter with LLM-powered recommendations.
+          </p>
         </GlowCard>
 
-        <GlowCard glowColor="pink-yellow" className="flex flex-col">
-          <div className="flex-1" />
-          <div>
-            <h3 className="text-base md:text-lg font-semibold text-foreground mb-2">
-              Performance-Critical Data Visualization Dashboard
-            </h3>
-            <p className="text-xs md:text-sm text-muted-foreground leading-relaxed line-clamp-4">
-              A high-performance real-time dashboard built with Next.js 14+ App Router and TypeScript that can smoothly render and update 10,000+ data points at 60 FPS.
-            </p>
-          </div>
+        <GlowCard glowColor="pink-yellow">
+          <h3 className="text-base md:text-lg font-semibold text-foreground mb-2">
+            Performance-Critical Data Visualization Dashboard
+          </h3>
+          <p className="text-xs md:text-sm text-muted-foreground leading-relaxed">
+            A high-performance real-time dashboard built with Next.js 14+ App Router and TypeScript that can smoothly render and update 10,000+ data points at 60 FPS.
+          </p>
         </GlowCard>
       </div>
     </>

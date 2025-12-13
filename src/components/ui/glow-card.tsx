@@ -95,7 +95,7 @@ const GlowCard: React.FC<GlowCardProps> = ({
           backgroundAttachment: 'fixed',
         }}
       />
-      <div className="relative z-10">{children}</div>
+      <div className="relative z-10 h-full flex flex-col justify-end">{children}</div>
     </div>
   );
 };
