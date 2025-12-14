@@ -63,12 +63,22 @@ const glowStyles = `
     mask-composite: intersect;
   }
   
-  [data-glow]::before {
+  [data-glow][data-glow-color="blue-pink"]::before {
     background-image: radial-gradient(
       calc(var(--spotlight-size, 200px) * 0.75) calc(var(--spotlight-size, 200px) * 0.75) at
       calc(var(--x, 0) * 1px)
       calc(var(--y, 0) * 1px),
-      hsl(var(--hue, 210) 100% 55% / 1), transparent 100%
+      hsl(var(--hue, 250) 100% 55% / 1), transparent 100%
+    );
+    filter: brightness(1.5);
+  }
+  
+  [data-glow][data-glow-color="pink-yellow"]::before {
+    background-image: radial-gradient(
+      calc(var(--spotlight-size, 200px) * 0.75) calc(var(--spotlight-size, 200px) * 0.75) at
+      calc(var(--x, 0) * 1px)
+      calc(var(--y, 0) * 1px),
+      color-mix(in hsl, #ec4899 calc((1 - var(--xp, 0.5)) * 100%), #facc15), transparent 100%
     );
     filter: brightness(1.5);
   }
