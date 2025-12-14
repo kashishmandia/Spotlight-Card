@@ -31,47 +31,29 @@ const GlowCard: React.FC<GlowCardProps> = ({
     return () => document.removeEventListener('pointermove', syncPointer);
   }, []);
 
-  // For pink-yellow, we use a different approach - calculate position relative to card
-  const isPinkYellow = glowColor === 'pink-yellow';
+  // Blue-pink gradient for left cards, pink-yellow for right cards
+  // Left cards: blue (250) → pink (340)
+  // Right cards: pink (340) → yellow (60), using negative spread to go the other direction
+  const colorConfig = glowColor === 'blue-pink' 
+    ? { base: 250, spread: 90 }    // Blue (left) to Pink (right)
+    : { base: 340, spread: -80 };  // Pink (left) to Yellow (right) - same pink as left card's right side
 
   // Pointer glow color based on card type
   const getPointerColor = () => {
     return glowColor === 'blue-pink' 
       ? 'rgba(168, 85, 247, 0.15)' // purple blend
-      : 'rgba(236, 72, 153, 0.15)'; // pink blend
-  };
-
-  // For blue-pink: use hue-based gradient (blue 250 → pink 320)
-  // For pink-yellow: use explicit color gradient
-  const getBackgroundImage = () => {
-    if (isPinkYellow) {
-      // Pink to yellow gradient based on mouse X position
-      return `radial-gradient(
-        var(--spotlight-size) var(--spotlight-size) at
-        calc(var(--x, 0) * 1px)
-        calc(var(--y, 0) * 1px),
-        color-mix(in hsl, #ec4899 calc((1 - var(--xp, 0.5)) * 100%), #facc15) / 0.08, transparent
-      )`;
-    }
-    // Blue-pink uses hue interpolation
-    return `radial-gradient(
-      var(--spotlight-size) var(--spotlight-size) at
-      calc(var(--x, 0) * 1px)
-      calc(var(--y, 0) * 1px),
-      hsl(calc(250 + (var(--xp, 0) * 70)) 80% 60% / 0.08), transparent
-    )`;
+      : 'rgba(245, 126, 88, 0.15)'; // orange-pink blend
   };
 
   return (
     <div
       ref={cardRef}
       data-glow
-      data-glow-color={glowColor}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       style={{
-        '--base': isPinkYellow ? 330 : 250,
-        '--spread': isPinkYellow ? 30 : 70,
+        '--base': colorConfig.base,
+        '--spread': colorConfig.spread,
         '--radius': '20',
         '--border': '2',
         '--backdrop': 'hsl(0 0% 10% / 0.8)',
@@ -80,10 +62,13 @@ const GlowCard: React.FC<GlowCardProps> = ({
         '--outer': '1',
         '--border-size': 'calc(var(--border, 2) * 1px)',
         '--spotlight-size': 'calc(var(--size, 200) * 1px)',
-        '--hue': isPinkYellow 
-          ? `calc(330 + (var(--xp, 0) * 30))` // Pink stays pink, slight shift
-          : `calc(250 + (var(--xp, 0) * 70))`, // Blue to pink
-        backgroundImage: getBackgroundImage(),
+        '--hue': 'calc(var(--base) + (var(--xp, 0) * var(--spread, 0)))',
+        backgroundImage: `radial-gradient(
+          var(--spotlight-size) var(--spotlight-size) at
+          calc(var(--x, 0) * 1px)
+          calc(var(--y, 0) * 1px),
+          hsl(var(--hue, 210) 80% 60% / 0.08), transparent
+        )`,
         backgroundColor: 'var(--backdrop, transparent)',
         backgroundSize: 'calc(100% + (2 * var(--border-size))) calc(100% + (2 * var(--border-size)))',
         backgroundPosition: '50% 50%',
